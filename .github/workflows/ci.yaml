@@ -75,7 +75,7 @@ jobs:
       - name: Build docker image
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }} .
       
-      - name: Puch Docker image in Docker hub
+      - name: Push Docker image in Docker hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
 
   deploy:
@@ -88,12 +88,8 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
       
-      - name: Install docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
+      - name: Log in Docker hub
+        run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Deploy to server
         run: |
