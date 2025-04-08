@@ -87,7 +87,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2" if not os.getenv("TEST_ENV") else "django.db.backends.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2" if not os.getenv("TEST_ENV")
+        else "django.db.backends.sqlite3",
         "NAME": os.getenv("DATABASE_NAME") if not os.getenv("TEST_ENV") else os.path.join(BASE_DIR, "test_db.sqlite3"),
         "USER": os.getenv("DATABASE_USER") if not os.getenv("TEST_ENV") else "",
         "PASSWORD": os.getenv("DATABASE_PASSWORD") if not os.getenv("TEST_ENV") else "",
